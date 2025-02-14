@@ -1,5 +1,9 @@
 # hoopoe
 
+hoopoe is a messengaer app. this is open source and it`s created ``` JUST FOR FUN ```.
+
+I used [this](https://github.com/amirbahador-hub/django_style_guide) repository to make my project structure. 
+
 ## project setup
 
 1- compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
@@ -38,3 +42,13 @@ docker compose -f docker-compose.dev.yml up -d
 ```
 python manage.py runserver
 ```
+
+## TODO
+
+- [ ] users models and apis
+- [ ] login
+- [ ] create SavedMessages
+- [ ] use mongodb to save messages
+- [ ] send text message to another person (chat but just with text)
+- [ ] remove useless packages and update libraries
+- [ ] use one of GPL LICENSE
