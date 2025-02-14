@@ -4,7 +4,12 @@ hoopoe is a messengaer app. this is open source and it`s created ``` JUST FOR FU
 
 I used [this](https://github.com/amirbahador-hub/django_style_guide) repository to make my project structure. 
 
-## project setup
+# Table of contents
+1. [project setup](#projec_setup)
+2. [TODO list](#todo)
+
+
+## project setup <a name="projec_setup"></a>
 
 1- compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
 ```
@@ -43,7 +48,7 @@ docker compose -f docker-compose.dev.yml up -d
 python manage.py runserver
 ```
 
-## TODO
+## TODO <a name="todo"></a>
 
 - [ ] users models and apis
 - [ ] login / logout
