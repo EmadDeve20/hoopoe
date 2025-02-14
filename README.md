@@ -46,7 +46,7 @@ python manage.py runserver
 ## TODO
 
 - [ ] users models and apis
-- [ ] login
+- [ ] login / logout
 - [ ] create SavedMessages
 - [ ] use mongodb to save messages
 - [ ] send text message to another person (chat but just with text)
