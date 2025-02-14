@@ -51,6 +51,6 @@ python manage.py runserver
 - [ ] use mongodb to save messages
 - [ ] send text message to another person (chat but just with text)
 - [ ] remove useless packages and update libraries
-- [ ] use one of GPL LICENSE
+- [x] use one of GPL LICENSE
 - [ ] use pre-commit
 - [ ] create github action for (ci/cd)
