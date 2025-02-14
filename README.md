@@ -59,3 +59,5 @@ python manage.py runserver
 - [x] use one of GPL LICENSE
 - [ ] use pre-commit
 - [ ] create github action for (ci/cd)
+- [ ] do setting of branches in github
+- [ ] create contributing rules in README 
