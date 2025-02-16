@@ -6,7 +6,7 @@ from .error_map import ERROR_MAP_MESSAGE
 from hoopoe.common.models import BaseModel
 
 
-def check_name_is_unique(value:str, model:BaseModel, 
+def check_field_is_unique(value:str, model:BaseModel, 
 exclude_id:UUID|str=None, field:str="name") -> str:
     """
     function to check this name is not exist and not set befor.
