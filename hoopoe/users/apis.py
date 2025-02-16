@@ -41,5 +41,5 @@ class RegisterApi(APIView):
             )
         output_serializer = OutPutRegisterSerializer(user)
 
-        return Response(output_serializer.data)
+        return Response(output_serializer.data, status=status.HTTP_201_CREATED)
 
