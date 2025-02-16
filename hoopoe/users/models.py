@@ -1,10 +1,12 @@
 from django.db import models
-from hoopoe.common.models import BaseModel
+
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager as BUM
 from django.contrib.auth.models import PermissionsMixin
 
+from hoopoe.common.models import BaseModel
 
 
 class BaseUserManager(BUM):
@@ -52,10 +54,29 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.CharField(max_length=1000, null=True, blank=True)
-    image = models.ImageField(null=True, upload_to="media", default=None)
+    def get_token(self) -> dict:
+        """
+        get refresh token and access token
 
-    def __str__(self):
-        return f"{self.user} >> {self.bio}"
+        Returns:
+            dict: return dict type of access and refresh token
+        """
+        data = dict()
+        token_class = RefreshToken
+
+        refresh = token_class.for_user(self)
+
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+
+        return data
+
+
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE,
+#                                 related_name="user_profile")
+#     bio = models.CharField(max_length=1000, null=True, blank=True)
+#     image = models.ImageField(null=True, upload_to="media", default=None)
+
+#     def __str__(self):
+#         return f"{self.user} >> {self.bio}"
