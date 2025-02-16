@@ -2,17 +2,16 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from .models import User
+from hoopoe.utils.validations.validators import check_field_is_unique
 
 class InputRegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
     confirm_password = serializers.CharField()
     
-    # TODO: Complte this function
-    # Check this email used or not
     def validate_email(self, email):
-        return email
-
+        return check_field_is_unique(email, User, field="email")
+        
     def validate(self, data):
         if data.get("password") != data.get("confirm_password"):
             raise ValidationError("confirm password is not equal to password")
