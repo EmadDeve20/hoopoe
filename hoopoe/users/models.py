@@ -72,11 +72,11 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         return data
 
 
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE,
-#                                 related_name="user_profile")
-#     bio = models.CharField(max_length=1000, null=True, blank=True)
-#     image = models.ImageField(null=True, upload_to="media", default=None)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,
+                                related_name="user_profile")
+    bio = models.CharField(max_length=1000, null=True, blank=True)
+    image = models.ImageField(null=True, upload_to="media", default=None)
 
-#     def __str__(self):
-#         return f"{self.user} >> {self.bio}"
+    def __str__(self):
+        return f"{self.user} >> {self.bio}"
