@@ -67,3 +67,4 @@ python manage.py runserver
 - [ ] create github action for (ci/cd)
 - [ ] do setting of branches in github
 - [ ] create contributing rules in README 
+- [ ] add captcha in login
