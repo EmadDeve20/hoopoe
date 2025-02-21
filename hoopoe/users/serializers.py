@@ -14,7 +14,7 @@ class InputRegisterSerializer(serializers.Serializer):
         
     def validate(self, data):
         if data.get("password") != data.get("confirm_password"):
-            raise ValidationError("confirm password is not equal to password")
+            raise ValidationError("confirm password is not equal to password.")
 
         return data
 
@@ -49,3 +49,17 @@ class OutputProfileSerializer(serializers.ModelSerializer):
         ]
 
 
+
+class InputChangePassword(serializers.Serializer):
+    password = serializers.CharField()
+    new_password = serializers.CharField()
+    confirm_password = serializers.CharField()
+
+    def validate(self, attrs):
+        new_password = attrs["new_password"]
+        confirm_password = attrs["confirm_password"]
+
+        if new_password != confirm_password:
+            raise ValidationError("confirm password is not equal to password.")
+
+        return attrs
