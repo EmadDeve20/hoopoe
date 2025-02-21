@@ -1,9 +1,9 @@
 from django.urls import path
-from . import apis
+from hoopoe.users import apis
 
+app_name = "users"
 
 urlpatterns = [
     path('register/', apis.RegisterApi.as_view(),name="register"),
-    # TODO: Add This url
-    # path('profile/', ProfileApi.as_view(),name="profile"),
+    path('profile/', apis.MyProfileApi.as_view(),name="profile"),
 ]
