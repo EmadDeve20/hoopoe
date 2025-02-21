@@ -44,7 +44,8 @@ class OutputProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             "bio",
-            "image"
+            "image",
+            "username"
         ]
 
 
