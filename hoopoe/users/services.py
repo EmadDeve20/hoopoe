@@ -1,7 +1,9 @@
-
 from django.db import transaction
+from django.contrib.auth import authenticate
+
 
 from rest_framework.request import Request 
+from rest_framework.exceptions import ValidationError
 
 from hoopoe.users.models import User, Profile
 
@@ -36,7 +38,7 @@ def register_user(*, email:str, password:str) -> User:
 
     return user
 
-
+@transaction.atomic
 def delete_my_account(request:Request):
     """
     delete my account
@@ -47,3 +49,27 @@ def delete_my_account(request:Request):
 
     user = request.user
     user.delete()
+
+
+@transaction.atomic
+def change_my_password(*, request:Request, user_requester:User,
+password:str, new_password:str):
+    """
+    change password of user
+
+    Args:
+        user_requester (User): user object want to change his password
+        password (str): correct password
+        new_password (str): new password to change password
+
+    Raises:
+        ValidationError: raise validation error if password for user is not
+        correct.
+    """
+
+    if not authenticate(username=user_requester.email, password=password):
+        raise ValidationError("Password incorrect!")
+
+    user_requester.set_password(new_password)
+
+    user_requester.save()
