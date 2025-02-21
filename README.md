@@ -53,7 +53,7 @@ python manage.py runserver
 - [ ] users models and apis
     - [x] create registering api
     - [x] create profile api to show my profile
-    - [ ] create another profile api to view profile of another user
+    - [x] create another profile api to view profile of another user
     - [x] create api to delete my account
     - [ ] create api to change my password
     - [ ] create an api to set my profile info (bio, email and profile image)
