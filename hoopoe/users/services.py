@@ -3,14 +3,17 @@ from django.db import transaction
 
 from rest_framework.request import Request 
 
-from hoopoe.users.models import User
+from hoopoe.users.models import User, Profile
 
 
-# def create_profile(*, user:BaseUser, bio:str | None) -> Profile:
-#     return Profile.objects.create(user=user, bio=bio)
+def create_profile(*, user:User):
+    """
+    function to create a profile for a user
 
-# def create_user(*, email:str, password:str) -> BaseUser:
-#     
+    Args:
+        user (User): user object
+    """
+    Profile.objects.create(user=user)
 
 
 @transaction.atomic
@@ -28,6 +31,7 @@ def register_user(*, email:str, password:str) -> User:
 
     user = User.objects.create(email=email)
     user.set_password(password)
+    create_profile(user=user)
 
     return user
 
