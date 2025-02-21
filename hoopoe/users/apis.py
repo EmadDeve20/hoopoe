@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser
 
 from hoopoe.api.mixins import ApiAuthMixin
 from hoopoe.users.selectors import (
@@ -10,13 +11,15 @@ get_profile_by_username
 from hoopoe.users.services import (
 register_user,
 delete_my_account,
-change_my_password
+change_my_password,
+change_my_profile
 )
 from hoopoe.users.serializers import (
 InputRegisterSerializer,
 OutPutRegisterSerializer,
 OutputProfileSerializer,
-InputChangePassword
+InputChangePassword,
+InputChangeMyProfile
 )
 from drf_spectacular.utils import extend_schema
 
@@ -31,6 +34,25 @@ class MyProfileApi(ApiAuthMixin, APIView):
                                                     context={"request":request})
 
         return Response(output_serializer.data)
+
+    @extend_schema(
+        tags=["My Profile"],
+        responses=OutputProfileSerializer,
+        request=InputChangeMyProfile
+    )
+    def patch(self, request):
+        
+        serializer = InputChangeMyProfile(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = request.user
+
+        new_profile = change_my_profile(user=user, **serializer.validated_data)
+
+        output_serializer = OutputProfileSerializer(new_profile,
+                                                    context={"request":request})
+        return Response(output_serializer.data)
+
 
     @extend_schema(
         tags=["My Profile"]
