@@ -10,11 +10,13 @@ get_profile_by_username
 from hoopoe.users.services import (
 register_user,
 delete_my_account,
+change_my_password
 )
 from hoopoe.users.serializers import (
 InputRegisterSerializer,
 OutPutRegisterSerializer,
-OutputProfileSerializer
+OutputProfileSerializer,
+InputChangePassword
 )
 from drf_spectacular.utils import extend_schema
 
@@ -71,3 +73,24 @@ class RegisterApi(APIView):
 
         return Response(output_serializer.data, status=status.HTTP_201_CREATED)
 
+
+class ChangeMyPassword(ApiAuthMixin, APIView):
+
+    @extend_schema(
+        tags=["My Profile"],
+        request=InputChangePassword
+    )
+    def post(self, request):
+        
+        serializer = InputChangePassword(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = request.user
+        password = serializer.validated_data.get("password")
+        new_password = serializer.validated_data.get("new_password")
+
+        change_my_password(request=request,
+                           user_requester=user,
+                           password=password, new_password=new_password)
+        
+        return Response(status=status.HTTP_200_OK)
