@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from .models import User
+from hoopoe.users.models import User, Profile
 from hoopoe.utils.validations.validators import check_field_is_unique
 
 class InputRegisterSerializer(serializers.Serializer):
@@ -36,4 +36,15 @@ class OutPutRegisterSerializer(serializers.ModelSerializer):
 
     def get_token(self, user:User) -> TokenSerializer:
         return user.get_token()
+
+
+class OutputProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = [
+            "bio",
+            "image"
+        ]
+
 
