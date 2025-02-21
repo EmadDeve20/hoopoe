@@ -71,6 +71,17 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
         return data
 
+    @property
+    def profile(self):
+        """
+        function to get profile of user
+
+        
+        Returns:
+            (Profile|None): return Profile of this user.
+            this is can be None if Profile of this user not founded.
+        """
+        return Profile.objects.filter(user=self).first()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,
@@ -82,4 +93,4 @@ class Profile(models.Model):
     image = models.ImageField(null=True, upload_to="media", default=None)
 
     def __str__(self):
-        return f"{self.user} >> {self.bio}"
+        return f"{self.user}"
