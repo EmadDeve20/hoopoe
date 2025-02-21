@@ -4,8 +4,11 @@ from rest_framework.views import APIView
 
 from hoopoe.api.mixins import ApiAuthMixin
 from hoopoe.users.selectors import get_my_profile
-from .services import register_user
-from .serializers import (
+from hoopoe.users.services import (
+register_user,
+delete_my_account,
+)
+from hoopoe.users.serializers import (
 InputRegisterSerializer,
 OutPutRegisterSerializer,
 OutputProfileSerializer
@@ -23,6 +26,14 @@ class MyProfileApi(ApiAuthMixin, APIView):
                                                     context={"request":request})
 
         return Response(output_serializer.data)
+
+    @extend_schema(
+        tags=["Profile"]
+    )
+    def delete(self, request):
+        delete_my_account(request=request)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class RegisterApi(APIView):
