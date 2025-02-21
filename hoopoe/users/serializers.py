@@ -63,3 +63,10 @@ class InputChangePassword(serializers.Serializer):
             raise ValidationError("confirm password is not equal to password.")
 
         return attrs
+
+
+class InputChangeMyProfile(serializers.Serializer):
+    bio = serializers.CharField(required=False)
+    image = serializers.ImageField(required=False)
+    username = serializers.CharField(required=False)
+
