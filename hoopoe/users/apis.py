@@ -2,27 +2,27 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-# from hoopoe.api.mixins import ApiAuthMixin
-# from hoopoe.users.selectors import get_profile
+from hoopoe.api.mixins import ApiAuthMixin
+from hoopoe.users.selectors import get_my_profile
 from .services import register_user
 from .serializers import (
 InputRegisterSerializer,
 OutPutRegisterSerializer,
+OutputProfileSerializer
 )
 from drf_spectacular.utils import extend_schema
 
-# TODO: Create this API to get My Profile Info
-# class ProfileApi(ApiAuthMixin, APIView):
+class MyProfileApi(ApiAuthMixin, APIView):
+    @extend_schema(
+        tags=["Profile"],
+        responses=OutputProfileSerializer
+    )
+    def get(self, request):
+        my_profile = get_my_profile(request=request)
+        output_serializer = OutputProfileSerializer(my_profile,
+                                                    context={"request":request})
 
-#     class OutPutSerializer(serializers.ModelSerializer):
-#         class Meta:
-#             model = Profile 
-#             fields = ("bio", "posts_count", "subscriber_count", "subscription_count")
-
-#     @extend_schema(responses=OutPutSerializer)
-#     def get(self, request):
-#         query = get_profile(user=request.user)
-#         return Response(self.OutPutSerializer(query, context={"request":request}).data)
+        return Response(output_serializer.data)
 
 
 class RegisterApi(APIView):
