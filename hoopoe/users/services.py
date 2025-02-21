@@ -1,5 +1,9 @@
-from django.db import transaction 
-from .models import User
+
+from django.db import transaction
+
+from rest_framework.request import Request 
+
+from hoopoe.users.models import User
 
 
 # def create_profile(*, user:BaseUser, bio:str | None) -> Profile:
@@ -26,3 +30,15 @@ def register_user(*, email:str, password:str) -> User:
     user.set_password(password)
 
     return user
+
+
+def delete_my_account(request:Request):
+    """
+    delete my account
+
+    Args:
+        request (Request): request object of user request.
+    """
+
+    user = request.user
+    user.delete()
