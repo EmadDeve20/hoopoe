@@ -52,12 +52,14 @@ python manage.py runserver
 
 - [ ] users models and apis
     - [x] create registering api
-    - [ ] create profile api to show my profile
+    - [x] create profile api to show my profile
     - [ ] create another profile api to view profile of another user
-    - [ ] create api to delete my account
+    - [x] create api to delete my account
     - [ ] create api to change my password
     - [ ] create an api to set my profile info (bio, email and profile image)
 - [ ] login / logout
+    - [x] login
+    - [ ] logout
 - [ ] create SavedMessages
 - [ ] use mongodb to save messages
 - [ ] send text message to another person (chat but just with text)
