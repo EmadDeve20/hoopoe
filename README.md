@@ -55,7 +55,7 @@ python manage.py runserver
     - [x] create profile api to show my profile
     - [x] create another profile api to view profile of another user
     - [x] create api to delete my account
-    - [ ] create api to change my password
+    - [x] create api to change my password
     - [ ] create an api to set my profile info (bio, email and profile image)
 - [ ] login / logout
     - [x] login
