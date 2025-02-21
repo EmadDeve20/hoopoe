@@ -13,7 +13,8 @@ def create_profile(*, user:User):
     Args:
         user (User): user object
     """
-    Profile.objects.create(user=user)
+    username = user.email.split("@")[0]
+    Profile.objects.create(user=user, username=username)
 
 
 @transaction.atomic
