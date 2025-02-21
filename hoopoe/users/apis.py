@@ -3,7 +3,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from hoopoe.api.mixins import ApiAuthMixin
-from hoopoe.users.selectors import get_my_profile
+from hoopoe.users.selectors import (
+get_my_profile,
+get_profile_by_username
+)
 from hoopoe.users.services import (
 register_user,
 delete_my_account,
@@ -17,7 +20,7 @@ from drf_spectacular.utils import extend_schema
 
 class MyProfileApi(ApiAuthMixin, APIView):
     @extend_schema(
-        tags=["Profile"],
+        tags=["My Profile"],
         responses=OutputProfileSerializer
     )
     def get(self, request):
@@ -28,13 +31,27 @@ class MyProfileApi(ApiAuthMixin, APIView):
         return Response(output_serializer.data)
 
     @extend_schema(
-        tags=["Profile"]
+        tags=["My Profile"]
     )
     def delete(self, request):
         delete_my_account(request=request)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class UsersProfile(ApiAuthMixin, APIView):
+
+    @extend_schema(
+        tags=["Users Profile"],
+        responses=OutputProfileSerializer
+    )
+    def get(self, request, username):
+        
+        profile = get_profile_by_username(username=username)
+
+        output_serializer = OutputProfileSerializer(profile)
+
+        return Response(output_serializer.data)
 
 class RegisterApi(APIView):
 
