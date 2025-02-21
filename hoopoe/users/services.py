@@ -38,6 +38,7 @@ def register_user(*, email:str, password:str) -> User:
 
     return user
 
+# TODO: Get User better than request
 @transaction.atomic
 def delete_my_account(request:Request):
     """
@@ -51,6 +52,7 @@ def delete_my_account(request:Request):
     user.delete()
 
 
+# TODO: Get User better than request
 @transaction.atomic
 def change_my_password(*, request:Request, user_requester:User,
 password:str, new_password:str):
@@ -73,3 +75,19 @@ password:str, new_password:str):
     user_requester.set_password(new_password)
 
     user_requester.save()
+
+
+# TODO: Add doc-string and get Image File to change Profile Image
+def change_my_profile(*, user:User, bio:str, username:str) -> Profile:
+    
+    profile = user.profile
+
+    if not profile:
+        raise ValidationError("Password incorrect!")
+
+    profile.bio = bio
+    profile.username = username
+
+    profile.save()
+
+    return profile
