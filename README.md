@@ -50,13 +50,13 @@ python manage.py runserver
 
 ## TODO <a name="todo"></a>
 
-- [ ] users models and apis
+- [x] users models and apis
     - [x] create registering api
     - [x] create profile api to show my profile
     - [x] create another profile api to view profile of another user
     - [x] create api to delete my account
     - [x] create api to change my password
-    - [ ] create an api to set my profile info (bio, email and profile image)
+    - [x] create an api to set my profile info (bio, email and profile image)
 - [ ] login / logout
     - [x] login
     - [ ] logout
