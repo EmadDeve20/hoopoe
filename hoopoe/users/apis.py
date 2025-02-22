@@ -49,8 +49,15 @@ class MyProfileApi(ApiAuthMixin, APIView):
         serializer.is_valid(raise_exception=True)
 
         user = request.user
+        
+        image = serializer.validated_data.get("image")
+        bio = serializer.validated_data.get("bio")
+        username = serializer.validated_data.get("username")
 
-        new_profile = change_my_profile(user=user, **serializer.validated_data)
+        new_profile = change_my_profile(user=user,
+                                        bio=bio,
+                                        username=username,
+                                        image=image)
 
         output_serializer = OutputProfileSerializer(new_profile,
                                                     context={"request":request})
