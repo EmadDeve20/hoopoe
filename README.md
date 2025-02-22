@@ -11,39 +11,44 @@ I used [this](https://github.com/amirbahador-hub/django_style_guide) repository 
 
 ## project setup <a name="projec_setup"></a>
 
-1- compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
+1 - compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
 ```
 cd hoopoe
 ```
 
-2- SetUp venv
+2 - SetUp venv
 ```
 virtualenv -p python3.10 venv
 source venv/bin/activate
 ```
 
-3- install Dependencies
+3 - install Dependencies
 ```
 pip install -r requirements_dev.txt
 pip install -r requirements.txt
 ```
 
-4- create your env
+4 - create your env
 ```
 cp .env.example .env
 ```
 
-5- Create tables
+5 - Create tables
 ```
 python manage.py migrate
 ```
 
-6- spin off docker compose
+6 - Run Initializer Command
+```
+python manage.py init
+```
+
+7 - spin off docker compose
 ```
 docker compose -f docker-compose.dev.yml up -d
 ```
 
-7- run the project
+8 - run the project
 ```
 python manage.py runserver
 ```
