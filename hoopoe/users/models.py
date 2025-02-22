@@ -83,6 +83,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         """
         return Profile.objects.filter(user=self).first()
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,
                                 related_name="user_profile")
@@ -90,7 +91,8 @@ class Profile(models.Model):
     username = models.CharField(max_length=255, default="")
 
     bio = models.CharField(max_length=1000, null=True, blank=True)
-    image = models.ImageField(null=True, upload_to="media", default=None)
+    image = models.ImageField(null=True, upload_to="images/profile",
+                              default='images/default/accounts/default.jpg')
 
     def __str__(self):
         return f"{self.user}"
