@@ -1,5 +1,7 @@
 from django.db import transaction
 from django.contrib.auth import authenticate
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 
 
 from rest_framework.request import Request 
@@ -8,15 +10,20 @@ from rest_framework.exceptions import ValidationError
 from hoopoe.users.models import User, Profile
 
 
-def create_profile(*, user:User):
+@transaction.atomic
+def create_profile(*, user:User) -> Profile:
     """
     function to create a profile for a user
 
     Args:
         user (User): user object
+    
+    Returns:
+        Profile: return created Profile object.
     """
+
     username = user.email.split("@")[0]
-    Profile.objects.create(user=user, username=username)
+    return Profile.objects.create(user=user, username=username)
 
 
 @transaction.atomic
@@ -37,6 +44,7 @@ def register_user(*, email:str, password:str) -> User:
     create_profile(user=user)
 
     return user
+
 
 # TODO: Get User better than request
 @transaction.atomic
@@ -77,16 +85,30 @@ password:str, new_password:str):
     user_requester.save()
 
 
-# TODO: Add doc-string and get Image File to change Profile Image
-def change_my_profile(*, user:User, bio:str, username:str) -> Profile:
+# TODO: Remove Old iamge if image updated.
+def change_my_profile(*, user:User, bio:str|None, username:str|None,
+image:InMemoryUploadedFile|None) -> Profile:
+    """
+    change my profile details.
+
+    Args:
+        user (User): user who want ot change profile.
+        bio (str | None): new bio. this is can be None.
+        username (str | None): new username. this is can be None
+        image (InMemoryUploadedFile | None): profile image. this is can be None
+
+    Returns:
+        Profile: return updated Profile object.
+    """
     
     profile = user.profile
 
     if not profile:
-        raise ValidationError("Password incorrect!")
+        profile = create_profile(user=user)
 
-    profile.bio = bio
-    profile.username = username
+    profile.bio = bio or profile.bio
+    profile.username = username or profile.username
+    profile.image = image or profile.image
 
     profile.save()
 
