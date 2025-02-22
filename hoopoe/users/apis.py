@@ -24,6 +24,9 @@ InputChangeMyProfile
 from drf_spectacular.utils import extend_schema
 
 class MyProfileApi(ApiAuthMixin, APIView):
+
+    parser_classes = [MultiPartParser]
+
     @extend_schema(
         tags=["My Profile"],
         responses=OutputProfileSerializer
