@@ -18,7 +18,8 @@ LOCAL_APPS = [
     'hoopoe.common.apps.CommonConfig',
     'hoopoe.users.apps.UsersConfig',
     'hoopoe.authentication.apps.AuthenticationConfig',
-    'hoopoe.captcha.apps.CaptchaConfig'
+    'hoopoe.captcha.apps.CaptchaConfig',
+    'hoopoe.commands.apps.CommandsConfig',
 ]
 
 THIRD_PARTY_APPS = [
