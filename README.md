@@ -69,7 +69,7 @@ python manage.py runserver
 - [ ] remove useless packages and update libraries
 - [x] use one of GPL LICENSE
 - [ ] use pre-commit
-- [ ] create github action for (ci/cd)
+- [x] create github action for (ci/cd)
 - [ ] do setting of branches in github
 - [ ] create contributing rules in README 
 - [ ] add captcha in login
