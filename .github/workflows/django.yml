@@ -1,4 +1,4 @@
-name: Django CI
+name: Hoopoe CI
 
 on:
   push:
@@ -28,10 +28,3 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
-        
-    - uses: actions/checkout@v4
-    - name: build and publish docekr image
-      run: |
-        docker login --username EmadDeve20 --password ${{ secrets.GH_PAT }} ghcr.io
-        ./build.sh
-
