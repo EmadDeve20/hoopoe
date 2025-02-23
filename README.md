@@ -62,9 +62,7 @@ python manage.py runserver
     - [x] create api to delete my account
     - [x] create api to change my password
     - [x] create an api to set my profile info (bio, email and profile image)
-- [ ] login / logout
-    - [x] login
-    - [ ] logout
+- [x] login
 - [ ] create SavedMessages
 - [ ] use mongodb to save messages
 - [ ] send text message to another person (chat but just with text)
