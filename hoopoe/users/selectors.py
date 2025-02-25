@@ -1,16 +1,15 @@
-from rest_framework.request import Request
 from rest_framework.exceptions import NotFound
 
 
-from hoopoe.users.models import Profile
+from hoopoe.users.models import Profile, User
 
 
-def get_my_profile(request:Request) -> Profile:
+def get_my_profile(user:User) -> Profile:
     """
     function to get user logging profile
 
     Args:
-        request (Request): get request of user requested
+        user (User): user requested
 
     Raises:
         NotFound: Error if Profile Notfound!
@@ -18,8 +17,6 @@ def get_my_profile(request:Request) -> Profile:
     Returns:
         Profile: return profile object of user requestr
     """
-    user = request.user
-    
     try:
         return Profile.objects.get(user=user)
     except Profile.DoesNotExist:
