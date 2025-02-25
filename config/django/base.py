@@ -165,6 +165,11 @@ CACHES = {
     }
 }
 
+USERNAME_REDIS = env("USERNAME_REDIS", default="hoopoe")
+PASSWORD_REDIS = env("PASSWORD_REDIS", default="hoopoe")
+HOST_REDIS = env("HOST_REDIS", default="127.0.0.1")
+PORT_REDIS = env('PORT_REDIS', cast=int, default=6379)
+
 # database channel layer for websocket
 CHANNEL_LAYERS = {
     "default": {
@@ -172,7 +177,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             # "hosts": [(env("HOST_REDIS"), env("PORT_REDIS", cast=int, default=6379))],
             "hosts": [
-                f"redis://:{env('PASSWORD_REDIS')}@{env('HOST_REDIS')}:{env('PORT_REDIS', cast=int, default=6379)}/14"
+                f"redis://{USERNAME_REDIS}:{PASSWORD_REDIS}@{HOST_REDIS}:{PORT_REDIS}/14"
             ],
             "capacity": 1500,  # default 100
             # "expiry": 100,  # default 60
