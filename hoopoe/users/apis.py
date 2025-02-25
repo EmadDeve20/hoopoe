@@ -32,7 +32,7 @@ class MyProfileApi(ApiAuthMixin, APIView):
         responses=OutputProfileSerializer
     )
     def get(self, request):
-        my_profile = get_my_profile(request=request)
+        my_profile = get_my_profile(user=request.user)
         output_serializer = OutputProfileSerializer(my_profile,
                                                     context={"request":request})
 
