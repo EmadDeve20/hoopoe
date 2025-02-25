@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
+    "daphne",  # daphne must before 'django.contrib.staticfiles'
     'django.contrib.staticfiles',
     *THIRD_PARTY_APPS,
     *LOCAL_APPS,
@@ -78,6 +79,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Asgi config for channels
+ASGI_APPLICATION = "config.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -161,6 +164,22 @@ CACHES = {
         'LOCATION': env("REDIS_LOCATION", default="redis://localhost:6379"),
     }
 }
+
+# database channel layer for websocket
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            # "hosts": [(env("HOST_REDIS"), env("PORT_REDIS", cast=int, default=6379))],
+            "hosts": [
+                f"redis://:{env('PASSWORD_REDIS')}@{env('HOST_REDIS')}:{env('PORT_REDIS', cast=int, default=6379)}/14"
+            ],
+            "capacity": 1500,  # default 100
+            # "expiry": 100,  # default 60
+        },
+    },
+}
+
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
 
