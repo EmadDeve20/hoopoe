@@ -63,9 +63,9 @@ python manage.py runserver
     - [x] create api to change my password
     - [x] create an api to set my profile info (bio, email and profile image)
 - [x] login
-- [ ] create SavedMessages
+- [x] create SavedMessages
 - [ ] use mongodb to save messages
-- [ ] send text message to another person (chat but just with text)
+- [x] send text message to another person (chat but just with text)
 - [ ] remove useless packages and update libraries
 - [x] use one of GPL LICENSE
 - [ ] use pre-commit
