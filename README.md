@@ -68,7 +68,7 @@ python manage.py runserver
 - [x] send text message to another person (chat but just with text)
 - [ ] remove useless packages and update libraries
 - [x] use one of GPL LICENSE
-- [ ] use pre-commit
+- [x] use pre-commit
 - [x] create github action for (ci/cd)
 - [x] do setting of branches in github
 - [ ] create contributing rules in README
