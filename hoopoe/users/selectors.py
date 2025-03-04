@@ -1,10 +1,9 @@
 from rest_framework.exceptions import NotFound
 
-
 from hoopoe.users.models import Profile, User
 
 
-def get_my_profile(user:User) -> Profile:
+def get_my_profile(user: User) -> Profile:
     """
     function to get user logging profile
 
@@ -23,7 +22,7 @@ def get_my_profile(user:User) -> Profile:
         raise NotFound("Sorry Your Prifle Notfound!")
 
 
-def get_profile_by_username(*, username:str) -> Profile:
+def get_profile_by_username(*, username: str) -> Profile:
     """
     get Profile object by username
 
@@ -31,7 +30,7 @@ def get_profile_by_username(*, username:str) -> Profile:
         username (str): username you want to see
 
     Raises:
-        NotFound: not found if profile notfounded 
+        NotFound: not found if profile notfounded
 
     Returns:
         Profile: return selected Profile object

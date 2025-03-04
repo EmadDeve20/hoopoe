@@ -1,10 +1,8 @@
-from django.db import models
-
-from rest_framework_simplejwt.tokens import RefreshToken
-
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager as BUM
 from django.contrib.auth.models import PermissionsMixin
+from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from hoopoe.common.models import BaseModel
 
@@ -14,7 +12,11 @@ class BaseUserManager(BUM):
         if not email:
             raise ValueError("Users must have an email address")
 
-        user = self.model(email=self.normalize_email(email.lower()), is_active=is_active, is_admin=is_admin)
+        user = self.model(
+            email=self.normalize_email(email.lower()),
+            is_active=is_active,
+            is_admin=is_admin,
+        )
 
         if password is not None:
             user.set_password(password)
@@ -41,8 +43,7 @@ class BaseUserManager(BUM):
 
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(verbose_name = "email address",
-                              unique=True)
+    email = models.EmailField(verbose_name="email address", unique=True)
 
     is_active = models.BooleanField(default=True)
 
@@ -52,7 +53,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
 
     def get_token(self) -> dict:
         """
@@ -76,7 +76,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         """
         function to get profile of user
 
-        
+
         Returns:
             (Profile|None): return Profile of this user.
             this is can be None if Profile of this user not founded.
@@ -85,14 +85,18 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,
-                                related_name="user_profile")
-    
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="user_profile"
+    )
+
     username = models.CharField(max_length=255, default="")
 
     bio = models.CharField(max_length=1000, null=True, blank=True)
-    image = models.ImageField(null=True, upload_to="images/profile",
-                              default='images/default/accounts/default.jpg')
+    image = models.ImageField(
+        null=True,
+        upload_to="images/profile",
+        default="images/default/accounts/default.jpg",
+    )
 
     def __str__(self):
         return f"{self.user}"

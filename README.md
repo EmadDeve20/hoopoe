@@ -2,7 +2,7 @@
 
 hoopoe is a messengaer app. this is open source and it`s created ``` JUST FOR FUN ```.
 
-I used [this](https://github.com/amirbahador-hub/django_style_guide) repository to make my project structure. 
+I used [this](https://github.com/amirbahador-hub/django_style_guide) repository to make my project structure.
 
 # Table of contents
 1. [project setup](#projec_setup)
@@ -71,5 +71,5 @@ python manage.py runserver
 - [ ] use pre-commit
 - [x] create github action for (ci/cd)
 - [x] do setting of branches in github
-- [ ] create contributing rules in README 
+- [ ] create contributing rules in README
 - [ ] add captcha in login

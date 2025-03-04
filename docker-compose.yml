@@ -24,7 +24,7 @@ services:
       - redis-data:/data
     restart: always
 
-  
+
   hoopoe:
     image: ghcr.io/emaddeve20/hoopoe:latest
     container_name: hoopoe
@@ -47,4 +47,3 @@ volumes:
     external: true
   media:
     external: true
-

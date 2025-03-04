@@ -1,14 +1,13 @@
 import ast
 
 from asgiref.sync import sync_to_async
-
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
-from hoopoe.users.selectors import get_my_profile
 from hoopoe.users.models import User
+from hoopoe.users.selectors import get_my_profile
 
 
-async def get_my_username(user:User) -> str|None:
+async def get_my_username(user: User) -> str | None:
     """
     get my username
 
@@ -27,7 +26,6 @@ async def get_my_username(user:User) -> str|None:
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
-    
     async def connect(self):
         try:
             self.user = self.scope["user"]
@@ -52,24 +50,22 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             await self.close(401)
 
         else:
-            await self.channel_layer.group_add(
-                self.my_username,
-                self.channel_name
-            )
+            await self.channel_layer.group_add(self.my_username, self.channel_name)
 
         await self.accept()
 
-
     async def receive(self, text_data=None, bytes_data=None, **kwargs):
         data = await sync_to_async(ast.literal_eval)(text_data)
-        
+
         # TODO: handle data recive with class or function to automaticly
         if "action" in data:
             if data["action"] == "check_connection":
-                event = {"message":
-                         {"action": "check_connection",
-                        "is_connecting": True}
+                event = {
+                    "message": {
+                        "action": "check_connection",
+                        "is_connecting": True,
                     }
+                }
                 await self.send_message(event)
 
             if data["action"] == "send_message":
@@ -80,7 +76,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
                 await self.send_message_to_receiver(message, receiver)
 
-
     async def send_message_to_receiver(self, message, receiver):
         receiver_channel_name = receiver
         await self.channel_layer.group_send(
@@ -88,12 +83,11 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             {
                 "type": "send_message",
                 "message": message,
-                "sender": self.my_username
-            }
+                "sender": self.my_username,
+            },
         )
 
-
-    async def send_message(self, event:dict):
+    async def send_message(self, event: dict):
         """
         send message
 
@@ -102,16 +96,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         """
         message = event["message"]
         sender = event.get("sender")
-        data = {
-            "message":message, 
-            "sender": sender if sender else None
-        }
+        data = {"message": message, "sender": sender if sender else None}
         await self.send_json(data)
 
-
-    async def disconnect(self, code):        
+    async def disconnect(self, code):
         if self.user.is_authenticated:
-            await self.channel_layer.group_discard(
-                self.my_username,
-                self.channel_name
-            )
+            await self.channel_layer.group_discard(self.my_username, self.channel_name)

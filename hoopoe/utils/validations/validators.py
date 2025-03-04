@@ -2,12 +2,17 @@ from uuid import UUID
 
 from rest_framework.serializers import ValidationError
 
-from .error_map import ERROR_MAP_MESSAGE
 from hoopoe.common.models import BaseModel
 
+from .error_map import ERROR_MAP_MESSAGE
 
-def check_field_is_unique(value:str, model:BaseModel, 
-exclude_id:UUID|str=None, field:str="name") -> str:
+
+def check_field_is_unique(
+    value: str,
+    model: BaseModel,
+    exclude_id: UUID | str = None,
+    field: str = "name",
+) -> str:
     """
     function to check this name is not exist and not set befor.
 
@@ -25,18 +30,14 @@ exclude_id:UUID|str=None, field:str="name") -> str:
         str: return value if it is unique.
     """
 
-    query = {
-        field:value
-    }
+    query = {field: value}
 
     qs = model.objects.filter(**query)
-        
+
     if exclude_id:
         qs = qs.exclude(id=exclude_id)
-    
+
     if qs.exists():
         raise ValidationError(ERROR_MAP_MESSAGE[model])
-    
-    return value
 
-        
+    return value

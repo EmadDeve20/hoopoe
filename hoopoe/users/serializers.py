@@ -1,17 +1,18 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from hoopoe.users.models import User, Profile
+from hoopoe.users.models import Profile, User
 from hoopoe.utils.validations.validators import check_field_is_unique
+
 
 class InputRegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
     confirm_password = serializers.CharField()
-    
+
     def validate_email(self, email):
         return check_field_is_unique(email, User, field="email")
-        
+
     def validate(self, data):
         if data.get("password") != data.get("confirm_password"):
             raise ValidationError("confirm password is not equal to password.")
@@ -30,24 +31,17 @@ class OutPutRegisterSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField("get_token")
 
     class Meta:
-        model = User 
-        fields = ["email", 
-                  "token"]
+        model = User
+        fields = ["email", "token"]
 
-    def get_token(self, user:User) -> TokenSerializer:
+    def get_token(self, user: User) -> TokenSerializer:
         return user.get_token()
 
 
 class OutputProfileSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Profile
-        fields = [
-            "bio",
-            "image",
-            "username"
-        ]
-
+        fields = ["bio", "image", "username"]
 
 
 class InputChangePassword(serializers.Serializer):
@@ -69,4 +63,3 @@ class InputChangeMyProfile(serializers.Serializer):
     bio = serializers.CharField(required=False)
     image = serializers.ImageField(required=False)
     username = serializers.CharField(required=False)
-

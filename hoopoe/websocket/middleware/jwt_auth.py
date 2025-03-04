@@ -1,7 +1,6 @@
 from urllib.parse import parse_qs
 
 from channels.auth import AuthMiddlewareStack
-from django.db import close_old_connections
 from django_channels_jwt_auth_middleware.auth import (
     JWTAuthMiddleware as _JWTAuthMiddleware,
 )

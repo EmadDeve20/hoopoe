@@ -1,23 +1,20 @@
-from django.db import transaction
 from django.contrib.auth import authenticate
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
-
-
-from rest_framework.request import Request 
+from django.db import transaction
 from rest_framework.exceptions import ValidationError
+from rest_framework.request import Request
 
-from hoopoe.users.models import User, Profile
+from hoopoe.users.models import Profile, User
 
 
 @transaction.atomic
-def create_profile(*, user:User) -> Profile:
+def create_profile(*, user: User) -> Profile:
     """
     function to create a profile for a user
 
     Args:
         user (User): user object
-    
+
     Returns:
         Profile: return created Profile object.
     """
@@ -27,7 +24,7 @@ def create_profile(*, user:User) -> Profile:
 
 
 @transaction.atomic
-def register_user(*, email:str, password:str) -> User:
+def register_user(*, email: str, password: str) -> User:
     """
     register user is a function to create User object.
 
@@ -48,7 +45,7 @@ def register_user(*, email:str, password:str) -> User:
 
 # TODO: Get User better than request
 @transaction.atomic
-def delete_my_account(request:Request):
+def delete_my_account(request: Request):
     """
     delete my account
 
@@ -62,8 +59,9 @@ def delete_my_account(request:Request):
 
 # TODO: Get User better than request
 @transaction.atomic
-def change_my_password(*, request:Request, user_requester:User,
-password:str, new_password:str):
+def change_my_password(
+    *, request: Request, user_requester: User, password: str, new_password: str
+):
     """
     change password of user
 
@@ -86,8 +84,13 @@ password:str, new_password:str):
 
 
 # TODO: Remove Old iamge if image updated.
-def change_my_profile(*, user:User, bio:str|None, username:str|None,
-image:InMemoryUploadedFile|None) -> Profile:
+def change_my_profile(
+    *,
+    user: User,
+    bio: str | None,
+    username: str | None,
+    image: InMemoryUploadedFile | None
+) -> Profile:
     """
     change my profile details.
 
@@ -100,7 +103,7 @@ image:InMemoryUploadedFile|None) -> Profile:
     Returns:
         Profile: return updated Profile object.
     """
-    
+
     profile = user.profile
 
     if not profile:
