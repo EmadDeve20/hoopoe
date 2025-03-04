@@ -7,6 +7,7 @@ I used [this](https://github.com/amirbahador-hub/django_style_guide) repository 
 # Table of contents
 1. [project setup](#projec_setup)
 2. [TODO list](#todo)
+3. [Contribute Rules](#contribe)
 
 
 ## project setup <a name="projec_setup"></a>
@@ -71,5 +72,39 @@ python manage.py runserver
 - [x] use pre-commit
 - [x] create github action for (ci/cd)
 - [x] do setting of branches in github
-- [ ] create contributing rules in README
+- [x] create contributing rules in README
 - [ ] add captcha in login
+
+
+## Contribute Rules <a name="contribe"></a>
+
+I hope these "Rules" are not be hard.
+
+### branch name
+
+it`s better to set the name of your branch like this:
+
+```emaddeve/feature/UpdateReadme```
+
+Use the tree part for your branch name.
+Part one is your name.
+The second part is a type of your PR, meaning it`s a fixed bug or a new feature.
+So part two can be (feature or fix).
+Part three is your Issue name or task name.
+
+### comit
+
+Please use pre-commit before committing anything.
+
+For setup pre-commit use this command:
+
+``` pre-commit install ```
+
+*Note*: Before using this command, ensure you installed the development requirements:
+
+``` pip install -r requirements_dev.txt ```
+
+If you forget to set up pre-commit before your commits in your machine, don't worry :D.
+Use this command to fix your code with pre-commit:
+
+``` pre-commit run --all-files ```
