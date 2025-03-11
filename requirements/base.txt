@@ -36,3 +36,6 @@ channels_redis
 websockets
 daphne==4.1.2
 django-channels-jwt-auth-middleware
+
+
+pymongo==4.11.2
