@@ -4,7 +4,6 @@ from django.db import models
 from django.utils import timezone
 
 from config.django.base import mongo_db
-from hoopoe.users.models import User
 
 
 class BaseModel(models.Model):
@@ -27,51 +26,51 @@ class MongoMessageModel:
         datetime and message_id will be generate automaticly.
     """
 
-    sender_id: UUID | None = None
-    reciver_id: UUID | None = None
+    sender_id: UUID | str | None = None
+    reciver_id: UUID | str | None = None
     message: str = ""
     datetime: timezone = timezone.now()
     message_id: UUID = uuid4()
 
     @property
-    def reciver(self) -> User | UUID:
+    def reciver(self):
+        """
+        get User model reciver or just reciver_id field.
+
+        Returns:
+            User | UUID
+        """
+        from hoopoe.users.models import User
+
         try:
             return User.objects.get(id=self.reciver_id)
         except User.DoesNotExist:
             return self.reciver_id
 
     @property
-    def sender(self) -> User | UUID:
+    def sender(self):
+        """
+        get User model of sender or just sender_id field.
+
+        Returns:
+            User | UUID
+        """
+        from hoopoe.users.models import User
+
         try:
             return User.objects.get(id=self.sender_id)
         except User.DoesNotExist:
             return self.sender_id
 
     def save(self):
-        self.check_validate()
+        json_data = self.fields_to_dict
 
         sender_collection = mongo_db.get_collection(f"{self.sender_id}-messages")
         reciver_collection = mongo_db.get_collection(f"{self.reciver_id}-messages")
 
-        sender_collection.insert_one(
-            {
-                "sender_id": str(self.sender_id),
-                "reciver_id": str(self.reciver_id),
-                "message": self.message,
-                "datetime": str(self.datetime),
-                "message_id": str(self.message_id),
-            }
-        )
+        sender_collection.insert_one(json_data)
 
-        reciver_collection.insert_one(
-            {
-                "sender_id": str(self.sender_id),
-                "reciver_id": str(self.reciver_id),
-                "message": self.message,
-                "datetime": str(self.datetime),
-                "message_id": str(self.message_id),
-            }
-        )
+        reciver_collection.insert_one(json_data)
 
     def check_validate(self):
         """
@@ -93,3 +92,23 @@ class MongoMessageModel:
             raise ValueError(
                 "The length of the message has to be greater than or equal to one."
             )
+
+    @property
+    def fields_to_dict(self) -> dict:
+        """
+        make fields input to dict type.
+
+        Returns:
+            dict: dict with key of fields and value is value of each fields.
+        """
+        self.check_validate()
+
+        dict_data = {
+            "sender_id": str(self.sender_id),
+            "reciver_id": str(self.reciver_id),
+            "message": self.message,
+            "datetime": str(self.datetime),
+            "message_id": str(self.message_id),
+        }
+
+        return dict_data
