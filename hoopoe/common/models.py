@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 
 from config.django.base import mongo_db
+from hoopoe.users.models import User
 
 
 class BaseModel(models.Model):
@@ -15,9 +16,15 @@ class BaseModel(models.Model):
         abstract = True
 
 
+# TODO: Create an app for this
 class MongoMessageModel:
     """
-    model to save messages between sender and reciver of a chat.
+    model to save messages between sender and reciver of a chat.\
+
+    fields:
+        sender_id and reciver_id: must be id of User object.
+        message: message must to be a string message.
+        datetime and message_id will be generate automaticly.
     """
 
     sender_id: UUID | None = None
@@ -27,12 +34,18 @@ class MongoMessageModel:
     message_id: UUID = uuid4()
 
     @property
-    def reciver(self):
-        return self.reciver_id
+    def reciver(self) -> User | UUID:
+        try:
+            return User.objects.get(id=self.reciver_id)
+        except User.DoesNotExist:
+            return self.reciver_id
 
     @property
-    def sender(self):
-        return self.sender_id
+    def sender(self) -> User | UUID:
+        try:
+            return User.objects.get(id=self.sender_id)
+        except User.DoesNotExist:
+            return self.sender_id
 
     def save(self):
         self.check_validate()
