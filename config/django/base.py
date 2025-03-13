@@ -22,6 +22,7 @@ LOCAL_APPS = [
     "hoopoe.captcha.apps.CaptchaConfig",
     "hoopoe.commands.apps.CommandsConfig",
     "hoopoe.websocket.apps.WebsocketConfig",
+    "hoopoe.chat_messages.apps.ChatMessagesConfig",
 ]
 
 THIRD_PARTY_APPS = [
