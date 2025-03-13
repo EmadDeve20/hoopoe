@@ -59,7 +59,7 @@ class MongoMessageModel:
         json_data = self.fields_to_dict
 
         # This is for save my saved messages. like telegram or saved posts in instagram
-        if self.sender == self.reciver:
+        if self.sender_id == self.reciver_id:
             saved_message_collection = mongo_db.get_collection(
                 f"{self.sender_id}-saved_messages"
             )
