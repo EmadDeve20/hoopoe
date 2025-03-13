@@ -52,14 +52,26 @@ class MongoMessageModel:
             return self.sender_id
 
     def save(self):
+        """
+        save fields to db
+        """
+
         json_data = self.fields_to_dict
 
-        sender_collection = mongo_db.get_collection(f"{self.sender_id}-messages")
-        reciver_collection = mongo_db.get_collection(f"{self.reciver_id}-messages")
+        # This is for save my saved messages. like telegram or saved posts in instagram
+        if self.sender == self.reciver:
+            saved_message_collection = mongo_db.get_collection(
+                f"{self.sender_id}-saved_messages"
+            )
+            saved_message_collection.insert_one(json_data)
 
-        sender_collection.insert_one(json_data)
+        else:
+            sender_collection = mongo_db.get_collection(f"{self.sender_id}-messages")
+            reciver_collection = mongo_db.get_collection(f"{self.reciver_id}-messages")
 
-        reciver_collection.insert_one(json_data)
+            sender_collection.insert_one(json_data)
+
+            reciver_collection.insert_one(json_data)
 
     def check_validate(self):
         """
