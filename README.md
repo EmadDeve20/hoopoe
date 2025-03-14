@@ -65,7 +65,7 @@ python manage.py runserver
     - [x] create an api to set my profile info (bio, email and profile image)
 - [x] login
 - [x] create SavedMessages
-- [ ] use mongodb to save messages
+- [x] use mongodb to save messages: messages will be saved in mongodb, but this is just a demo and its not final db structure.
 - [x] send text message to another person (chat but just with text)
 - [ ] remove useless packages and update libraries
 - [x] use one of GPL LICENSE
@@ -73,7 +73,7 @@ python manage.py runserver
 - [x] create github action for (ci/cd)
 - [x] do setting of branches in github
 - [x] create contributing rules in README
-- [ ] add captcha in login
+
 
 
 ## Contribute Rules <a name="contribe"></a>
