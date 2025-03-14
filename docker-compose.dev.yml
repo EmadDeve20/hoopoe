@@ -42,10 +42,23 @@ services:
       - redis-data:/data
     command: ["sh", "-c", "rm -f /data/dump.rdb && redis-server --save '' --appendonly no --requirepass $PASSWORD_REDIS"]
 
-
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: hoopoe_mongo
+      MONGO_INITDB_ROOT_PASSWORD: hoopoe_mongo
+      MONGO_INITDB_DATABASE: hoopoe_mongo
+    volumes:
+      - mongo-data:/data/db
 
 volumes:
-    postgres-data:
-      external: true
-    redis-data:
-      external: true
+  postgres-data:
+    external: true
+  redis-data:
+    external: true
+  mongo-data:
+    external: true

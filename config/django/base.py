@@ -22,6 +22,7 @@ LOCAL_APPS = [
     "hoopoe.captcha.apps.CaptchaConfig",
     "hoopoe.commands.apps.CommandsConfig",
     "hoopoe.websocket.apps.WebsocketConfig",
+    "hoopoe.chat_messages.apps.ChatMessagesConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -177,9 +178,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             # "hosts": [(env("HOST_REDIS"), env("PORT_REDIS", cast=int, default=6379))],
-            "hosts": [
-                f"redis://{USERNAME_REDIS}:{PASSWORD_REDIS}@{HOST_REDIS}:{PORT_REDIS}/14"
-            ],
+            "hosts": [f"redis://:{PASSWORD_REDIS}@{HOST_REDIS}:{PORT_REDIS}/14"],
             "capacity": 1500,  # default 100
             # "expiry": 100,  # default 60
         },
@@ -197,6 +196,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 from config.settings.celery import *  # noqa
 from config.settings.cors import *  # noqa
 from config.settings.jwt import *  # noqa
+from config.settings.mongodb import *  # noqa
 from config.settings.sessions import *  # noqa
 from config.settings.swagger import *  # noqa
 

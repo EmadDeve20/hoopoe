@@ -3,26 +3,8 @@ import ast
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
-from hoopoe.users.models import User
-from hoopoe.users.selectors import get_my_profile
-
-
-async def get_my_username(user: User) -> str | None:
-    """
-    get my username
-
-    Args:
-        user (User): user requester for this
-
-    Returns:
-        str|None: return username if founded.
-    """
-    try:
-        profile = await sync_to_async(get_my_profile)(user=user)
-        username = profile.username
-        return username
-    except Exception:
-        return None
+from hoopoe.chat_messages.services import save_message
+from hoopoe.websocket.selectors import get_my_username, get_user_id_from_username
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
@@ -78,6 +60,11 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     async def send_message_to_receiver(self, message, receiver):
         receiver_channel_name = receiver
+
+        reciver_id = await get_user_id_from_username(username=receiver)
+
+        save_message(message=message, sender_id=self.user.id, reciver_id=reciver_id)
+
         await self.channel_layer.group_send(
             receiver_channel_name,
             {
