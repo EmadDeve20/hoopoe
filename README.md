@@ -92,7 +92,7 @@ The second part is a type of your PR, meaning it`s a fixed bug or a new feature.
 So part two can be (feature or fix).
 Part three is your Issue name or task name.
 
-### comit
+### commit
 
 Please use pre-commit before committing anything.
 
