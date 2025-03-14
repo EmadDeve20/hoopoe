@@ -26,10 +26,7 @@ jobs:
     - name: Setup Enviroments
       run: |
         cp .env.example .env
-        docker compose -f docker-compose.dev.yml up -d
-        docker volume create postgres-data
-        docker volume create redis-data
-        docker volume create mongo-data
+        docker compose -f docker-compose.ci.yml up -d
     - name: Run Tests
       run: |
         python manage.py test
