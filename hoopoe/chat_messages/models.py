@@ -7,8 +7,8 @@ from config.django.base import mongo_db
 from hoopoe.common.models import BaseModel
 
 
-class UserConnections(BaseModel):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+class Contacts(BaseModel):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, unique=True)
 
     profiles = models.ManyToManyField("users.Profile")
 
