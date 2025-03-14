@@ -51,6 +51,8 @@ class MongoMessageModel:
         except User.DoesNotExist:
             return self.sender_id
 
+    # TODO: This format of saving data is not good.
+    # Think about it to make it better for performance to resent messages to each users.
     def save(self):
         """
         save fields to db
