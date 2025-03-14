@@ -8,7 +8,7 @@ from hoopoe.common.models import BaseModel
 
 
 class Contacts(BaseModel):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, unique=True)
+    user = models.OneToOneField("users.User", on_delete=models.CASCADE)
 
     profiles = models.ManyToManyField("users.Profile")
 
