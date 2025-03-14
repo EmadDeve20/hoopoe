@@ -1,8 +1,22 @@
 from uuid import UUID, uuid4
 
+from django.db import models
 from django.utils import timezone
 
 from config.django.base import mongo_db
+from hoopoe.common.models import BaseModel
+
+
+class UserConnections(BaseModel):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+
+    profiles = models.ManyToManyField("users.Profile")
+
+    # TODO: Uncomment of this section when group added
+    # groups = models.ManyToManyField()
+
+    # TODO: Uncomment of this section when channels added
+    # channels = models.ManyToManyField()
 
 
 class MongoMessageModel:
